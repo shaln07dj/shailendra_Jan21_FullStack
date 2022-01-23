@@ -1,9 +1,8 @@
-
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAdminUser
-from movietheatre.models import Movies
-from movietheatre.serializers import MovieSerializers
+from movietheatre.models import MovieCast
+from movietheatre.serializers import MovieCastSerializers
 
 from rest_framework.response import Response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -13,19 +12,19 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from rest_framework import status
 
-class GetMovies(APIView):
+class GetMovieCasts(APIView):
     def get(self,request):
-        movies=Movies.objects.all()
-        response=MovieSerializers(movies,many=True)
+        movies=MovieCast.objects.all()
+        response=MovieCastSerializers(movies,many=True)
         return Response(response.data)
 
 
-class CreateMovies(APIView):
+class CreateMovieCasts(APIView):
     permission_classes = [IsAdminUser]
 
     def post(self,request):
         movie_request=request.data
-        movie_data=MovieSerializers(data=movie_request)
+        movie_data=MovieCastSerializers(data=movie_request)
         if(movie_data.is_valid()):
             movie_data.save()
             return Response({
@@ -39,8 +38,8 @@ class CreateMovies(APIView):
             
 
         
-class GetMovie(APIView):
+class GetMovieCast(APIView):
     def get(self,request,pk):
-        movie=Movies.objects.get(id=pk)
-        response=MovieSerializers(movie,many=False)
+        movie=MovieCast.objects.get(id=pk)
+        response=MovieCastSerializers(movie,many=False)
         return Response(response.data)
