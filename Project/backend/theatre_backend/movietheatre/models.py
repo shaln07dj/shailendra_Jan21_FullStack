@@ -25,7 +25,7 @@ class MovieCast(models.Model):
     
 class Movies(models.Model):
     user=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
-    cast=models.ForeignKey(MovieCast,on_delete=models.SET_NULL,null=True)
+    cast=models.ForeignKey(MovieCast,on_delete=models.SET_NULL,null=True,blank=True)
     name=models.CharField(max_length=50)
     discription=models.TextField(null=True,blank=True)
     img=models.URLField()
